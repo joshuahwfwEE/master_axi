@@ -10,4 +10,6 @@ Once the last acknowledgment is returned, the core returns to idle, lowers RREAD
 The key to this being a single beat master is that both AWLEN and ARLEN are held at zero.   
 This drastically simplifies the logic of the master:  
 1: you can hold WLAST high and ignore RLAST  
-2: you don’t need to worry about the maximum burst length, whether or not your burst addresses are incrementing or not, or whether or not the burst will cross a 4kB boundary.
+2: you don’t need to worry about the maximum burst length, whether or not your burst addresses are incrementing or not, or whether or not the burst will cross a 4kB boundary.  
+
+the limitation of single beat master is the lower throughput, you can use in the siuation that is suit for low throughput
