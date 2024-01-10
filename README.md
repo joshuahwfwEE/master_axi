@@ -12,4 +12,10 @@ This drastically simplifies the logic of the master:
 1: you can hold WLAST high and ignore RLAST  
 2: you don’t need to worry about the maximum burst length, whether or not your burst addresses are incrementing or not, or whether or not the burst will cross a 4kB boundary.  
 
-the limitation of single beat master is the lower throughput, you can use in the siuation that is suit for low throughput
+the limitation of single beat master is the lower throughput, you can use in the siuation that is suit for low throughput  
+
+method1: xilinx axi traffic generator  
+method2: hls axi_lite_config_master  
+
+in axi traffic generator:  
+using coe generator to generate the addr.coe and data.coe
