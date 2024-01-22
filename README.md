@@ -1,4 +1,4 @@
-# axi_lite_master_single_beat
+# axi_lite_master
 an axi_lite_master_single_beat ip that can be used for control axi_lite_slave interface : 
 
 note:  
