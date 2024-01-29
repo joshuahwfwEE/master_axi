@@ -22,7 +22,6 @@ but something should be beware:
 Bursts to or from a fixed address can be no longer than 16 beats in length. If the address increments, however, bursts of 256 beats are allowed.
 Bursts are not allowed to cross 4kB boundaries.  
 
-
 what is the axi 4k boundry:  
 each axi brust can not over 4kB, because the minimum page size of axi slave is 4kB  
 the reason is if a single axi brust that is over than 4kB, it may access across different slaves ( because all slave is 4k/1k aligned)  
@@ -44,6 +43,15 @@ and so on if you have the different bus width, it still can use the same brust s
 
 the limitation of single beat master is the lower throughput, the purpose focus on the comprehension of how it works  
 
+
+
+in advanced:  
+we need to consider about data dependency issue:  
+1. RAW
+2. WAR
+3. WAW
+4. RAR
+   
 
 note:  
 single beat master only issues one request at a time  
