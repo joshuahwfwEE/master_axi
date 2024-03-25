@@ -23,7 +23,7 @@ the difference between 1 and 2 is the throughput of data because of the number o
 1 only process 1 transaction and waiting its response while 2 process multiple transaction.  
 
 
-#notice that increasing the number of transaction outstanding will beware:  
+###### notice that increasing the number of transaction outstanding will beware #############  
 
 1.  deal with burst addressing and length calculations.
 Bursts to or from a fixed address can be no longer than 16 beats in length. If the address increments, however, bursts of 256 beats are allowed.
