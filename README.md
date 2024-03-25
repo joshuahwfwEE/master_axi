@@ -39,7 +39,7 @@ the difference between 1 and 2 is the throughput of data because of the number o
     If the address increments within the burst, larger burst lengths are permitted, with a maximum burst length of 256 beat are allowed.
     
 2.  Bursts are not allowed to cross 4kB boundaries.  
-    what is the axi 4kB boundaries: " each axi brust can not over 4kB, because the minimum page size of axi slave is 4kB "
+    what is the axi 4kB boundaries: " each axi brust can not over 4kB, because the minimum page size of axi slave is 4kB "  
     the reason is if a single axi brust that is over than 4kB, it may access across different slaves ( because all slave is 4k/1k aligned)    
 
     question: if a single axi brust address to slave A and its brust size across to slave B, what is the expected behavior?      
