@@ -3,22 +3,28 @@ master_axi
 axi is a popular interface, it can use in implementation of both control path and data path   
 
 this topic we will implement 4 types transfer and compare them in detail:  
-1. single beats transfer  
-an AXI master that issues requests, one at a time, and then waits for the response from that request before issuing a second request, don’t need to keep track of how many transactions are outstanding at all.
+here using vitis hls for implementation the following 4 types:   
+1. single beats transfer:    
+   an AXI master that issues requests, one at a time, and then waits for the response from that request before issuing a second request, don’t need to keep track of how many transactions are outstanding at all.
 
-2. single beats pipelined:
-to imporve its performace, you will need to issue multiple requests without waiting for their responses. This is the purpose of the single beat pipelined master.  
-A single beat pipelined master will potentially issue multiple single beat requests before ever getting the first response.
+2. single beats pipelined:  
+   to imporve its performace, you will need to issue multiple requests without waiting for their responses.  
+   This is the purpose of the single beat pipelined master, but it need to keep track of how many transactions are outstanding.   
+   A single beat pipelined master will potentially issue multiple single beat requests before ever getting the first response.
 
-3. Bursting, single channel:
+4. Bursting, single channel:  
    this master can deal with single bus to the slave of xilinx axi block ram interface
    
-4. Bursting, multiple channel:    
+5. Bursting, multiple channel:    
    this master can deal with multiple bus's different requset like axi crossbar  
    
 
-the difference of above is the throughput of data, in the same time continous beat can process multiple read or write operation each beat while single beat process 1 operation each beat  
-but something should be beware: 
+the difference between 1 and 2 is the throughput of data because of the number of transaction outstanding,  
+1 only process 1 transaction and waiting its response while 2 process multiple transaction.  
+
+
+#notice that increasing the number of transaction outstanding will beware:  
+
 1.  deal with burst addressing and length calculations.
 Bursts to or from a fixed address can be no longer than 16 beats in length. If the address increments, however, bursts of 256 beats are allowed.
 Bursts are not allowed to cross 4kB boundaries.  
