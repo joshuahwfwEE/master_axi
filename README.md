@@ -1,7 +1,8 @@
-# axi_lite_master
-axi_lite_master  
+# master_axi
+master_axi
 axi is a popular interface, it can use in implementation of both control path and data path   
-this topic we will implement 4 types transfer:  
+
+this topic we will implement 4 types transfer and compare them in detail:  
 1. single beats transfer  
 an AXI master that issues requests, one at a time, and then waits for the response from that request before issuing a second request, don’t need to keep track of how many transactions are outstanding at all.
 
