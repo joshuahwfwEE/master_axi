@@ -14,10 +14,13 @@ here using vitis hls for implementation the following 4 types:
    This is the purpose of the single beat pipelined master, but it need to use AXID for keeping track of how many transactions are outstanding.     
    A single beat pipelined master will potentially issue multiple single beat requests before ever getting the first response.
 
-3. Bursting, single channel:  
-   this master can deal with single bus to the slave of xilinx axi block ram interface
+3. Bursting without pipelined, single bus:    
+   this master can issue the single transaction with multiple data beats in a single bus.    
    
-4. Bursting, multiple channel:    
+4. Bursting with pipelined, single bus:      
+   this master can issue the multiple transaction with each contains multiple data beats in a single bus.    
+   
+5. Bursting, multiple bus:    
    this master can deal with multiple bus's different requset like axi crossbar  
    
 
@@ -25,48 +28,44 @@ the difference between 1 and 2 is the throughput of data because of the number o
 1 only process 1 transaction and waiting its response while 2 process multiple transaction.  
 
 
-###### notice that increasing the number of transaction outstanding will beware #############  
+###### notice that using bursting will increasing the number of transaction outstanding, something should beware #############  
 
-1.  deal with burst addressing and length calculations.
-    brust types: Fixed Address:  
+1.  Deal with burst addressing and length calculations.
+    Burst types: Fixed Address:  
     If the burst is to or from a fixed address, the maximum allowed burst length is limited to 16 beats.  
     Each beat represents a single data transfer of the specified data width
     
-    brust types: Incremental Addressing:  
-    If the address increments within the burst, larger burst lengths are permitted, with a maximum burst length of 256 beat.
+    Burst types: Incremental Addressing:  
+    If the address increments within the burst, larger burst lengths are permitted, with a maximum burst length of 256 beat are allowed.
+    
+2.  Bursts are not allowed to cross 4kB boundaries.
+    what is the axi 4kB boundaries: " each axi brust can not over 4kB, because the minimum page size of axi slave is 4kB "
+    the reason is if a single axi brust that is over than 4kB, it may access across different slaves ( because all slave is 4k/1k aligned)    
+
+    question: if a single axi brust address to slave A and its brust size across to slave B, what is the expected behavior?      
+         ans: only slave A receive the adress and control message while slave B can't, and then A should resp but B should not resp to master, it will cause the brust transfer fail.
+        
+    example1:
+            if you have the base address like:    
+              32’h44a001000, 32’h44a02000, 32’h44a03000…  
+      
+    they are all 4k align address assignment.  
+    because the address [31:12] is the same which means that they are in the same page, the axi brust size should not exceed 4096 bytes.
+    
+    example2:
+            if a read operaion: mrd 0x44a12000 fff,  it can use a single transaction with brusting length 4096 data beats for complete this request.  
+    
+    example3:
+            if a read operaion: mrd 0x44a12000 1fff,  it will use 2 single transaction with each brusting length 4096 data beats for complete this request.  
+
+    
+    conclusion:  
+               a single write/read operation contain many brust transfer, each brust transfer contain multiple beats transfer or you can use a single beat transfer with the large brust length but it must less than 4096 bytes    
     
 
 
-
-
-Bursts to or from a fixed address can be no longer than 16 beats in length. If the address increments, however, bursts of 256 beats are allowed.
-Bursts are not allowed to cross 4kB boundaries.  
-
-what is the axi 4k boundry:  
-each axi brust can not over 4kB, because the minimum page size of axi slave is 4kB  
-the reason is if a single axi brust that is over than 4kB, it may access across different slaves ( because all slave is 4k/1k aligned)  
-ex: if a single axi brust address to slave A and its brust size across to slave B, what is the expected behavior?  
-only slave A receive the adress and control message while slave B can't, and then A should resp but B should not resp to master, it will cause the brust transfer fail.  
-
-if you have the base address like:  
-32’h44a001000, 32’h44a02000, 32’h44a03000…  
-it is a 4k align address assignment.
-because the address [31:12] is the same which means that they are in the same page, the axi brust size should not exceed 4096 bytes  
-
-a single write/read operation contain many brust transfer, each brust transfer contain multiple beats transfer or you can use a single beat transfer with the large brust length while it must less than 4096 bytes  
-
-and then combine with aw operation and r/w data can form a transcation  
-hence if a read operaion: mrd 0x44a12000 fff,  it will use a single brust to complete this transfer
-if a read operaion: mrd 0x44a12000 1fff,  it will use 2 single brust to complete this transfer  
-
-and so on if you have the different bus width, it still can use the same brust size to complete the transaction  
-
-the limitation of single beat master is the lower throughput, the purpose focus on the comprehension of how it works  
-
-
-
 in advanced:  
-we need to consider about data dependency issue:  
+we need to consider about data dependency issue while we need to make sure that the data which assign to the output is updated or not:    
 1. RAW
 2. WAR
 3. WAW
@@ -74,7 +73,7 @@ we need to consider about data dependency issue:
    
 
 note:  
-single beat master only issues one request at a time  
+single beat master only issues single transaction for transfer 1 data beats at a time  
 ![alt text](https://zipcpu.com/img/wbm2axisp/single-master-reads.svg)  
 This master uses the RREADY and BREADY signals as states in a state machine to know whether or not it is in the middle of a read or write cycle.   
 Once the last acknowledgment is returned, the core returns to idle, lowers RREADY and BREADY, and is then ready to accept a new burst request.  
