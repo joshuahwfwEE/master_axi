@@ -73,7 +73,7 @@ we need to consider about data dependency issue while we need to make sure that 
    
 
 note:  
-single beat master only issues single transaction for transfer 1 data beats at a time  
+1. single beats in a single transaction only transfer 1 data beats at a time  
 ![alt text](https://zipcpu.com/img/wbm2axisp/single-master-reads.svg)  
 This master uses the RREADY and BREADY signals as states in a state machine to know whether or not it is in the middle of a read or write cycle.   
 Once the last acknowledgment is returned, the core returns to idle, lowers RREADY and BREADY, and is then ready to accept a new burst request.  
@@ -83,8 +83,6 @@ This drastically simplifies the logic of the master:
 1: you can hold WLAST high and ignore RLAST  
 2: you don’t need to worry about the maximum burst length, whether or not your burst addresses are incrementing or not, or whether or not the burst will cross a 4kB boundary.  
 
-this example will provide a simple single beat transfer, and single beat with pipeline  
-and then we will discuss the brusting with single channel and then the brusting with multiple channel
 
 I'm try to implement this form the reference of  http://zipcpu.com/blog/2020/03/23/wbm2axisp.html  
 which is a very well blog for cpu design  
@@ -93,10 +91,10 @@ which is a very well blog for cpu design
 
 
 
-if you search for another high throughput, you can use 2 method:  
+others method for as the axi master you can use 2 method:  
 method1: xilinx axi traffic generator  
 method2: axi vip  
-method3: hls axi_lite_master
+
 
 in axi traffic generator:  
 using coe generator to generate the addr.coe and data.coe, follow the tutorial of pg058 to see how to generate the coe file, or you can run vitis platform project with spm to setup the ATG coe   
@@ -104,6 +102,3 @@ using coe generator to generate the addr.coe and data.coe, follow the tutorial o
 in axi vip:  
 you can use the pkt in your testbench which is suit for runung simulation to config the register of your slave  
 
-in hls axi_lite_config_master has 2 part:  
-reg_write:  
-reg_read:  
