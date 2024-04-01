@@ -8,34 +8,33 @@ in this repos I will implement 4 types transfer in a bi-directional "DDR4 to Xil
 here using vitis HLS 2022.2 for implementation the following 4 types:  
 
 ##############################################################################################################   
-
-1. single beats in a single transaction that consist of one burst transfer:                                        
+  
+1. single beats in a single transaction that consist of one burst transfer:                                          
    an AXI master that issues requests, one at a time, and then waits for the response from that request before issuing a second request,  
-   don’t need to keep track of how many transactions are outstanding at all.    
-##############################################################################################################  
+   don’t need to keep track of how many transactions are outstanding at all.      
 
-##############################################################################################################   
+
+ 
 2. single beats in a single transaction that consist of one burst transfer with transaction piped:    
    to imporve 1. performace, you will need to issue multiple transaction without waiting for their responses.  
    This is the purpose of the single beat pipelined master, but it need to use AXID for keeping track of how many transactions are outstanding.     
-   A single beat pipelined master will potentially issue multiple single beat requests before ever getting the first response.
-##############################################################################################################  
+   A single beat pipelined master will potentially issue multiple single beat requests before ever getting the first response.  
+  
+  
 
-##############################################################################################################   
-3. Bursting without pipelined, single bus:    
-   this master can issue the single transaction with multiple data beats in a single bus.    
-##############################################################################################################  
+3. Bursting without pipelined, single bus:      
+   this master can issue the single transaction with multiple data beats in a single bus.
+         
+    
+4. Bursting with pipelined, single bus:        
+   this master can issue the multiple transaction with each contains multiple data beats in a single bus.      
+  
 
-############################################################################################################## 
-4. Bursting with pipelined, single bus:      
-   this master can issue the multiple transaction with each contains multiple data beats in a single bus.    
-##############################################################################################################  
-
-##############################################################################################################   
-5. (optional)Bursting, multiple bus:    
-   this master can deal with multiple bus's different requset like axi crossbar  
-##############################################################################################################      
-##############################################################################################################  
+    
+5. (optional)Bursting, multiple bus:      
+   this master can deal with multiple bus's different requset like axi crossbar    
+      
+   
 
 the difference between 1 and 2 is the throughput of data because of the number of transaction outstanding,  
 1 only process 1 transaction and waiting its response while 2 process multiple transaction.  
