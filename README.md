@@ -77,7 +77,8 @@ the difference between 1 and 2 is the throughput of data because of the number o
 
 
 in advanced:  
-we need to consider about data dependency issue while we need to make sure that the data which assign to the output is updated or not:    
+we need to consider about data dependency issue while we need to make sure that the moment assigning the data to the output is updated or have not updated :    
+4 types of data dependencies will potientially casue pipeline hazard   
 1. RAW
 2. WAR
 3. WAW
