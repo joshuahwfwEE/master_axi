@@ -7,10 +7,9 @@ this topic we will focus on axi4_memorymap,
 in this repos I will implement 4 types transfer in a bi-directional "DDR4 to Xilinx BLOCK RAM master" and compare their difference in detail:      
 here using vitis HLS 2022.2 for implementation the following 4 types:  
 
-############################################################################################################## 
+##############################################################################################################   
 
-##############################################################################################################  
-1. single beats in a single transaction that consist of one burst transfer:                                      
+1. single beats in a single transaction that consist of one burst transfer:                                        
    an AXI master that issues requests, one at a time, and then waits for the response from that request before issuing a second request, don’t need to keep track of how many transactions are outstanding at all.
 ##############################################################################################################  
 
