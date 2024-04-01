@@ -1,9 +1,9 @@
 # master_axi
 master_axi
-axi is a popular interface, it can use in implementation of both control path and data path   
+axi is a common used interface in ARM and Xilinx, it can be used in implementation of various control path like axi_lite and data path like axi4_mm   
 
-this topic we will implement 4 types transfer and compare them in detail:  
-here using vitis hls for implementation the following 4 types:  
+this topic we will focus on axi4_memorymap, in this repos I will implement 4 types transfer in a bi-directional "DDR4 to Xilinx BLOCK RAM master" and compare their difference in detail:    
+here using vitis HLS 2022.2 for implementation the following 4 types:  
 
 
 1. single beats in a single transaction that consist of one burst transfer:
@@ -20,7 +20,7 @@ here using vitis hls for implementation the following 4 types:
 4. Bursting with pipelined, single bus:      
    this master can issue the multiple transaction with each contains multiple data beats in a single bus.    
    
-5. Bursting, multiple bus:    
+5. (optional)Bursting, multiple bus:    
    this master can deal with multiple bus's different requset like axi crossbar  
    
 
