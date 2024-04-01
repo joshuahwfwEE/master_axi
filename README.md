@@ -1,8 +1,10 @@
 # master_axi
 master_axi
-axi is a common used interface in ARM and Xilinx, it can be used in implementation of various control path like axi_lite and data path like axi4_mm   
+axi is a common used interface in ARM and Xilinx,     
+it can be used in implementation of various control path like axi_lite and data path like axi4_mm     
 
-this topic we will focus on axi4_memorymap, in this repos I will implement 4 types transfer in a bi-directional "DDR4 to Xilinx BLOCK RAM master" and compare their difference in detail:    
+this topic we will focus on axi4_memorymap,  
+in this repos I will implement 4 types transfer in a bi-directional "DDR4 to Xilinx BLOCK RAM master" and compare their difference in detail:      
 here using vitis HLS 2022.2 for implementation the following 4 types:  
 
 
