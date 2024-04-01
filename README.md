@@ -10,7 +10,8 @@ here using vitis HLS 2022.2 for implementation the following 4 types:
 ##############################################################################################################   
 
 1. single beats in a single transaction that consist of one burst transfer:                                        
-   an AXI master that issues requests, one at a time, and then waits for the response from that request before issuing a second request, don’t need to keep track of how many transactions are outstanding at all.
+   an AXI master that issues requests, one at a time, and then waits for the response from that request before issuing a second request,  
+   don’t need to keep track of how many transactions are outstanding at all.    
 ##############################################################################################################  
 
 ##############################################################################################################   
