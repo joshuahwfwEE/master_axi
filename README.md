@@ -43,14 +43,16 @@ the difference between 1 and 2 is the throughput of data because of the number o
 ###### notice that using bursting will increasing the number of transaction outstanding, something should beware #############  
 
 1.  Deal with burst addressing and length calculations.
-    Burst types: Fixed Address:  
+    the number of outstanding means that it can contain the number of responsing in the bus the same time.
+         
+    Burst types: Fixed Address:    
     If the burst is to or from a fixed address, the maximum allowed burst length is limited to 16 beats.  
     Each beat represents a single data transfer of the specified data width
     
     Burst types: Incremental Addressing:  
     If the address increments within the burst, larger burst lengths are permitted, with a maximum burst length of 256 beat are allowed.
     
-2.  Bursts are not allowed to cross 4kB boundaries.  
+3.  Bursts are not allowed to cross 4kB boundaries.  
     what is the axi 4kB boundaries: " each axi brust can not over 4kB, because the minimum page size of axi slave is 4kB "  
     the reason is if a single axi brust that is over than 4kB, it may access across different slaves ( because all slave is 4k/1k aligned)    
 
